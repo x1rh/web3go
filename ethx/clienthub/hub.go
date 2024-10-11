@@ -1,4 +1,4 @@
-package hub
+package clienthub
 
 import (
 	"github.com/pkg/errors"
