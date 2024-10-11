@@ -1,4 +1,4 @@
-module github.com/x1rh/ethx
+module github.com/x1rh/web3go/ethx
 
 go 1.21.4
 

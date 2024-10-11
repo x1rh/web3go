@@ -3,8 +3,8 @@ package hub
 import (
 	"github.com/pkg/errors"
 
-	"github.com/x1rh/ethx/chain"
-	"github.com/x1rh/ethx/client"
+	"github.com/x1rh/web3go/ethx/chain"
+	"github.com/x1rh/web3go/ethx/client"
 )
 
 type ClientHub struct {

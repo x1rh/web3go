@@ -5,7 +5,7 @@ import (
 	"crypto/ecdsa"
 	"math/big"
 
-	"github.com/x1rh/ethx/convertx"
+	"github.com/x1rh/web3go/ethx/convertx"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"

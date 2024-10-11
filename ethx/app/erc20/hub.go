@@ -3,8 +3,8 @@ package erc20
 import (
 	"fmt"
 
-	"github.com/x1rh/ethx/chain"
-	"github.com/x1rh/ethx/client"
+	"github.com/x1rh/web3go/ethx/chain"
+	"github.com/x1rh/web3go/ethx/client"
 )
 
 type Hub struct {

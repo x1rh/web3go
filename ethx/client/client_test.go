@@ -3,7 +3,7 @@ package client
 import (
 	"testing"
 
-	"github.com/x1rh/ethx/chain"
+	"github.com/x1rh/web3go/ethx/chain"
 )
 
 func testSuit() *Client {

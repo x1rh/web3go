@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/x1rh/ethx/wallet"
+	"github.com/x1rh/web3go/ethx/wallet"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/pkg/errors"

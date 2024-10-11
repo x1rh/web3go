@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/x1rh/ethx/convertx"
+	"github.com/x1rh/web3go/ethx/convertx"
 
 	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"

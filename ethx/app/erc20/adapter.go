@@ -3,7 +3,7 @@ package erc20
 import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/pkg/errors"
-	"github.com/x1rh/ethx/client"
+	"github.com/x1rh/web3go/ethx/client"
 )
 
 type Adapter struct {

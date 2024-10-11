@@ -3,7 +3,7 @@ package convertx
 import (
 	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
-	"github.com/x1rh/ethx/types"
+	"github.com/x1rh/web3go/ethx/types"
 )
 
 // GasFee in wei

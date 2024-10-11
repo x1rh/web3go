@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/x1rh/ethx/types"
+	"github.com/x1rh/web3go/ethx/types"
 )
 
 func TestPrettyGasInfo(t *testing.T) {

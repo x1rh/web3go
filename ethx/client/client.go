@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/x1rh/ethx/chain"
+	"github.com/x1rh/web3go/ethx/chain"
 
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/pkg/errors"

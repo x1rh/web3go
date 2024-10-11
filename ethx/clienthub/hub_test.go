@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/x1rh/ethx/chain"
+	"github.com/x1rh/web3go/ethx/chain"
 )
 
 func TestNewHub(t *testing.T) {
