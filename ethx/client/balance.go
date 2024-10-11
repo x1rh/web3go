@@ -2,8 +2,9 @@ package client
 
 import (
 	"context"
-	"github.com/x1rh/ethx/convertx"
 	"math/big"
+
+	"github.com/x1rh/ethx/convertx"
 
 	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
@@ -12,9 +13,9 @@ import (
 )
 
 // Balance get current balance in wei
-func (a *Adapter) Balance(ctx context.Context, walletAddress string) (*big.Int, error) {
+func (c *Client) Balance(ctx context.Context, walletAddress string) (*big.Int, error) {
 	account := common.HexToAddress(walletAddress)
-	balance, err := a.Client.BalanceAt(ctx, account, nil)
+	balance, err := c.Client.BalanceAt(ctx, account, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "get balance error")
 	}
@@ -22,8 +23,8 @@ func (a *Adapter) Balance(ctx context.Context, walletAddress string) (*big.Int, 
 }
 
 // EtherBalance get current balance in eth
-func (a *Adapter) EtherBalance(ctx context.Context, walletAddress string) (*decimal.Decimal, error) {
-	balanceInWei, err := a.Balance(ctx, walletAddress)
+func (c *Client) EtherBalance(ctx context.Context, walletAddress string) (*decimal.Decimal, error) {
+	balanceInWei, err := c.Balance(ctx, walletAddress)
 	if err != nil {
 		return nil, errors.Wrap(err, "get balance error")
 	}

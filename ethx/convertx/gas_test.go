@@ -3,6 +3,7 @@ package convertx
 import (
 	"reflect"
 	"testing"
+
 	"github.com/x1rh/ethx/types"
 )
 
@@ -22,13 +23,8 @@ func TestPrettyGasInfo(t *testing.T) {
 				gasLimit: nil,
 				gasPrice: nil,
 			},
-			want: &types.GasInfo{
-				GasLimit:       0,
-				GasPrice:       nil,
-				GasPriceInGwei: nil,
-				GasFeeInEth:    nil,
-			},
-			wantErr: false,
+			want:    nil,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {

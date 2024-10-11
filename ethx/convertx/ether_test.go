@@ -1,43 +1,65 @@
 package convertx
 
 import (
-	"math/big"
-	"reflect"
 	"testing"
+
+	"github.com/shopspring/decimal"
 )
 
 func TestToLowerUnit(t *testing.T) {
-	res, ok := big.NewInt(0).SetString("114514000000000000000000000", 10)
-	if !ok {
-		t.Fatal("invalid")
+}
+
+func TestWeiToGwei(t *testing.T) {
+
+}
+
+func TestWeiToEther(t *testing.T) {
+
+}
+
+func TestGweiToEther(t *testing.T) {
+
+}
+
+func TestGweiToWei(t *testing.T) {
+
+}
+
+func TestEtherToWei(t *testing.T) {
+	x_wei, err := decimal.NewFromString("114514000000000000000000000")
+	if err != nil {
+		t.Fatal("invalid", err)
 	}
 
 	type args struct {
-		x        string
-		accuracy string
+		x string
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    *big.Int
+		want    decimal.Decimal
 		wantErr bool
 	}{
 		{name: "test1", args: args{
-			x:        "114514000",
-			accuracy: "18",
-		}, want: res,
+			x: "114514000",
+		}, want: x_wei,
 			wantErr: false,
 		}}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := DivByDecimal(tt.args.x, tt.args.accuracy)
+			got, err := EtherToWei(tt.args.x)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ToLowerUnit() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("EtherToWei() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToLowerUnit() got = %v, want %v", got, tt.want)
+			if x_wei.Cmp(*got) != 0 {
+				// if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("EtherToWei() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func TestEtherToGwei(t *testing.T) {
+
 }

@@ -1,27 +1,28 @@
 package erc20
 
 import (
-	"github.com/x1rh/ethx/client"
-	"github.com/x1rh/ethx/config"
 	"fmt"
+
+	"github.com/x1rh/ethx/chain"
+	"github.com/x1rh/ethx/client"
 )
 
 type Hub struct {
-	chains       map[int64]config.Config
-	EthClientMap map[int64]*client.Adapter
+	chains       map[int64]chain.Config
+	EthClientMap map[int64]*client.Client
 	ERC20Map     map[int64]map[string]*Adapter
 }
 
-func NewHub(chains map[int64]config.Config) (*Hub, error) {
+func NewHub(chains map[int64]chain.Config) (*Hub, error) {
 	p := &Hub{
-		chains:       make(map[int64]config.Config),
-		EthClientMap: make(map[int64]*client.Adapter),
+		chains:       make(map[int64]chain.Config),
+		EthClientMap: make(map[int64]*client.Client),
 		ERC20Map:     make(map[int64]map[string]*Adapter),
 	}
 
 	for chainId, chainConfig := range chains {
 		p.chains[chainId] = chains[chainId]
-		c := client.MustNewAdapter(chainConfig)
+		c := client.MustNewClient(chainConfig)
 		p.EthClientMap[chainId] = c
 		p.ERC20Map[chainId] = make(map[string]*Adapter)
 	}
@@ -29,7 +30,7 @@ func NewHub(chains map[int64]config.Config) (*Hub, error) {
 	return p, nil
 }
 
-func (p *Hub) With(chainID int64, tokenAddress string) *Adapter{
+func (p *Hub) With(chainID int64, tokenAddress string) *Adapter {
 	c, ok := p.EthClientMap[chainID]
 	if !ok {
 		panic(fmt.Sprintf("missing eth client, chainID=%d", chainID))
@@ -43,7 +44,7 @@ func (p *Hub) With(chainID int64, tokenAddress string) *Adapter{
 	adapter, ok := erc20Map[tokenAddress]
 	if !ok {
 		a := MustNewAdapter(chainID, tokenAddress, c)
-		erc20Map[tokenAddress] = a 
+		erc20Map[tokenAddress] = a
 		return a
 	}
 	return adapter

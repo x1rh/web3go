@@ -1,11 +1,7 @@
-package config
+package chain
 
 type Config struct {
-	ChainID   int
+	ChainId   int
 	ChainName string
 	URL       string
-}
-
-
-type HubConfig struct {
 }

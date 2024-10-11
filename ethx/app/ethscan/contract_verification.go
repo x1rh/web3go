@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
+	"log/slog"
 	"net/http"
 	"net/url"
 )
@@ -17,7 +17,6 @@ import (
 // 	CreatorTxHash  string            `json:"creatorTxHash"`
 // 	ChosenContract string            `json:"chosenContract"`
 // }
-
 
 type VerifyContractReq struct {
 	URL, apiKey, sourceCode, contractAddress, contractName, metadataJson string
@@ -41,7 +40,6 @@ type VerifyResp struct {
 	Message string `json:"message"`
 	Result  string `json:"result"`
 }
-
 
 func VerifyContract(URL, apiKey, sourceCode, contractAddress, contractName, metadataJson string) (string, error) {
 	//logx.Debugf("_url: |%s|\n", _url)
@@ -80,7 +78,7 @@ func VerifyContract(URL, apiKey, sourceCode, contractAddress, contractName, meta
 
 	resp, err := http.Post(URL, "application/x-www-form-urlencoded", payload)
 	if err != nil {
-		logx.Error(err)
+		slog.Error("fail to post request", slog.Any("err", err))
 		return "", err
 	}
 	defer resp.Body.Close()
@@ -88,7 +86,7 @@ func VerifyContract(URL, apiKey, sourceCode, contractAddress, contractName, meta
 	body := new(bytes.Buffer)
 	_, err = body.ReadFrom(resp.Body)
 	if err != nil {
-		logx.Error("err:", err)
+		slog.Error("fail to parse response", slog.Any("err", err))
 		return "", err
 	}
 
@@ -99,7 +97,7 @@ func VerifyContract(URL, apiKey, sourceCode, contractAddress, contractName, meta
 	var res VerifyResp
 	err = json.Unmarshal(body.Bytes(), &res)
 	if err != nil {
-		logx.Error(err)
+		slog.Error("fail to unmarshal result", slog.Any("err", err))
 		return "", err
 	}
 

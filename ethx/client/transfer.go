@@ -3,8 +3,9 @@ package client
 import (
 	"context"
 	"crypto/ecdsa"
-	"github.com/x1rh/ethx/convertx"
 	"math/big"
+
+	"github.com/x1rh/ethx/convertx"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -16,7 +17,7 @@ import (
 // PrivateKey:
 // ToAddress:
 // amount: transfer volume
-func (a *Adapter) Transfer(
+func (c *Client) Transfer(
 	ctx context.Context,
 	chainID int64,
 	PrivateKey string,
@@ -25,7 +26,7 @@ func (a *Adapter) Transfer(
 	gasLimit uint64,
 	gasPrice *big.Int,
 ) (*types.Transaction, error) {
-	value, err := convertx.EthToWei(amount)
+	value, err := convertx.EtherToWei(amount)
 	if err != nil {
 		return nil, errors.Wrap(err, "invalid amount")
 	}
@@ -42,7 +43,7 @@ func (a *Adapter) Transfer(
 	}
 
 	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
-	nonce, err := a.Client.PendingNonceAt(ctx, fromAddress)
+	nonce, err := c.Client.PendingNonceAt(ctx, fromAddress)
 	if err != nil {
 		return nil, errors.Wrap(err, "fail to get nonce")
 	}
@@ -53,7 +54,7 @@ func (a *Adapter) Transfer(
 		return nil, errors.Wrap(err, "fail to sign a tx")
 	}
 
-	err = a.Client.SendTransaction(ctx, signedTx)
+	err = c.Client.SendTransaction(ctx, signedTx)
 	if err != nil {
 		return nil, errors.Wrap(err, "fail to send transaction")
 	}

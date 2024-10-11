@@ -3,17 +3,18 @@ package hub
 import (
 	"reflect"
 	"testing"
-	"github.com/x1rh/ethx/config"
+
+	"github.com/x1rh/ethx/chain"
 )
 
 func TestNewHub(t *testing.T) {
 	type args struct {
-		chains map[int]config.Config
+		chains map[int]chain.Config
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    *Hub
+		want    *ClientHub
 		wantErr bool
 	}{
 		// TODO: Add test cases.

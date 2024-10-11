@@ -5,10 +5,9 @@ import (
 	"testing"
 )
 
-
 func TestGasPrice(t *testing.T) {
-	adapter := testSuit()
-	gasPrice, err := adapter.GasPrice(context.Background())
+	cli := testSuit()
+	gasPrice, err := cli.GasPrice(context.Background())
 	if err != nil {
 		t.Fatal(err)
 	}

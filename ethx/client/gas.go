@@ -15,18 +15,18 @@ import (
 // fromAddress must not be empty
 // toAddr could be empty
 // ethValue could be nil or zero, unit is wei
-func (a *Adapter) EstimateGas(ctx context.Context, fromAddr, toAddr any, data []byte, ethValue *big.Int) (uint64, error) {
+func (c *Client) EstimateGas(ctx context.Context, fromAddr, toAddr any, data []byte, ethValue *big.Int) (uint64, error) {
 	_from, err := wallet.MustAddress(fromAddr)
 	if err != nil {
 		return 0, errors.Wrap(err, "invalid from address")
 	}
-	
+
 	_to, err := wallet.MustAddress(toAddr)
 	if err != nil {
 		return 0, errors.Wrap(err, "invalid to address")
 	}
 
-	return a.Client.EstimateGas(ctx, ethereum.CallMsg{
+	return c.Client.EstimateGas(ctx, ethereum.CallMsg{
 		From:     *_from,
 		To:       _to,
 		Gas:      0,
@@ -36,10 +36,9 @@ func (a *Adapter) EstimateGas(ctx context.Context, fromAddr, toAddr any, data []
 	})
 }
 
-
 // GasPrice get current gas price, unit is wei
-func (a *Adapter) GasPrice(ctx context.Context) (*big.Int, error) {
-	gasPrice, err := a.Client.SuggestGasPrice(ctx)
+func (c *Client) GasPrice(ctx context.Context) (*big.Int, error) {
+	gasPrice, err := c.Client.SuggestGasPrice(ctx)
 	if err != nil {
 		return nil, err
 	} else {
@@ -47,6 +46,6 @@ func (a *Adapter) GasPrice(ctx context.Context) (*big.Int, error) {
 	}
 }
 
-func (a *Adapter) EIP1559() {
+func (c *Client) EIP1559() {
 
 }
