@@ -9,13 +9,13 @@ import (
 
 type Client struct {
 	Client *ethclient.Client
-	Config chain.Config
+	Config chain.IConfig
 }
 
-func NewClient(c chain.Config) (*Client, error) {
-	cli, err := ethclient.Dial(c.URL)
+func NewClient(c chain.IConfig) (*Client, error) {
+	cli, err := ethclient.Dial(c.GetURL())
 	if err != nil {
-		return nil, errors.Wrap(err, "dial ethereum error")
+		return nil, errors.Wrap(err, "fail to dial ethereum node")
 	}
 	return &Client{
 		Client: cli,
@@ -23,7 +23,7 @@ func NewClient(c chain.Config) (*Client, error) {
 	}, nil
 }
 
-func MustNewClient(c chain.Config) *Client {
+func MustNewClient(c chain.IConfig) *Client {
 	cli, err := NewClient(c)
 	if err != nil {
 		panic(err)

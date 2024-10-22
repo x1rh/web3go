@@ -1,4 +1,4 @@
-package erc20
+package token
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (a *Adapter) Decimals(ctx context.Context) (uint64, error) {
-	decimals, err := a.ERC20.Decimals(&bind.CallOpts{
+func (t *Token) Decimals(ctx context.Context) (uint64, error) {
+	decimals, err := t.ERC20.Decimals(&bind.CallOpts{
 		Pending:     false,
 		From:        common.Address{},
 		BlockNumber: nil,
@@ -22,8 +22,8 @@ func (a *Adapter) Decimals(ctx context.Context) (uint64, error) {
 	return uint64(decimals), nil
 }
 
-func (a *Adapter) Symbol(ctx context.Context) (string, error) {
-	symbol, err := a.ERC20.Symbol(&bind.CallOpts{
+func (t *Token) Symbol(ctx context.Context) (string, error) {
+	symbol, err := t.ERC20.Symbol(&bind.CallOpts{
 		Pending:     false,
 		From:        common.Address{},
 		BlockNumber: nil,
@@ -36,8 +36,8 @@ func (a *Adapter) Symbol(ctx context.Context) (string, error) {
 	return symbol, nil
 }
 
-func (a *Adapter) Name(ctx context.Context) (string, error) {
-	name, err := a.ERC20.Name(&bind.CallOpts{
+func (t *Token) Name(ctx context.Context) (string, error) {
+	name, err := t.ERC20.Name(&bind.CallOpts{
 		Pending:     false,
 		From:        common.Address{},
 		BlockNumber: nil,
@@ -48,4 +48,28 @@ func (a *Adapter) Name(ctx context.Context) (string, error) {
 		return "", errors.Wrap(err, "fail to get token name")
 	}
 	return name, nil
+}
+
+func (t *Token) TokenMetadata() (*TokenMetadata, error) {
+	ctx := context.Background()
+	name, err := t.Name(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	symbol, err := t.Symbol(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	decimals, err := t.Decimals(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &TokenMetadata{
+		Name:     name,
+		Symbol:   symbol,
+		Decimals: decimals,
+	}, nil
 }

@@ -9,7 +9,7 @@ import (
 
 func TestNewHub(t *testing.T) {
 	type args struct {
-		chains map[int]chain.Config
+		chains map[int]chain.IConfig
 	}
 	tests := []struct {
 		name    string

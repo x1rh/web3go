@@ -7,6 +7,7 @@ import (
 
 func TestClient_Transfer(t *testing.T) { 
 	pk := ""  // fill it when test 
+	
 	if pk == "" {
 		return 
 	}
@@ -15,7 +16,7 @@ func TestClient_Transfer(t *testing.T) {
 	amount := "0.0001"
 	cli := testSuit()
 	chainId := int64(11155111)
-	gasLimit := uint64(21000) // 固定值
+	gasLimit := uint64(21000) 
 	
 	gasPrice, err := cli.GasPrice(context.Background())
 	if err != nil {

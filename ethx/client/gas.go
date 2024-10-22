@@ -12,7 +12,7 @@ import (
 
 // EstimateGas
 // get gas limit with call data
-// fromAddress must not be empty
+// fromAddress must not empty
 // toAddr could be empty
 // ethValue could be nil or zero, unit is wei
 func (c *Client) EstimateGas(ctx context.Context, fromAddr, toAddr any, data []byte, ethValue *big.Int) (uint64, error) {
@@ -46,6 +46,6 @@ func (c *Client) GasPrice(ctx context.Context) (*big.Int, error) {
 	}
 }
 
-func (c *Client) EIP1559() {
+// func (c *Client) EIP1559() {
 
-}
+// }

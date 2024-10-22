@@ -1,14 +1,15 @@
-package erc20
+package token
 
 import (
+	"math/big"
+
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"math/big"
 )
 
-func (a *Adapter) Approve(
+func (t *Token) Approve(
 	pk string,
 	spender string,
 	amount *big.Int,
@@ -20,12 +21,12 @@ func (a *Adapter) Approve(
 		return nil, err
 	}
 
-	txOpts, err := bind.NewKeyedTransactorWithChainID(privateKey, big.NewInt(a.ChainID))
+	txOpts, err := bind.NewKeyedTransactorWithChainID(privateKey, big.NewInt(int64(t.ChainId)))
 	if err != nil {
 		return nil, err
 	}
 	txOpts.GasLimit = gasLimit
 	txOpts.GasPrice = gasPrice
 
-	return a.ERC20.Approve(txOpts, common.HexToAddress(spender), amount)
+	return t.ERC20.Approve(txOpts, common.HexToAddress(spender), amount)
 }

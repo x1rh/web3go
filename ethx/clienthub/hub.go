@@ -7,37 +7,38 @@ import (
 	"github.com/x1rh/web3go/ethx/client"
 )
 
+// ClientHub is a multi-chain client manager
 type ClientHub struct {
-	chains  map[int]chain.Config
+	chains  map[int]chain.IConfig
 	clients map[int]*client.Client
 }
 
-func New(chains map[int]chain.Config) (*ClientHub, error) {
-	h := &ClientHub{
-		chains:  make(map[int]chain.Config),
+func New(chains map[int]chain.IConfig) (*ClientHub, error) {
+	hub := &ClientHub{
+		chains:  make(map[int]chain.IConfig),
 		clients: make(map[int]*client.Client),
 	}
 
-	for k, v := range chains {
-		h.chains[k] = v
-		c, err := client.NewClient(v)
+	for chainId, chainConfig := range chains {
+		hub.chains[chainId] = chainConfig
+		client, err := client.NewClient(chainConfig)
 		if err != nil {
-			return nil, errors.Wrap(err, "fail to new client")
+			return nil, errors.Wrap(err, "fail to create client")
 		}
-		h.clients[k] = c
+		hub.clients[chainId] = client
 	}
-	return h, nil
+	return hub, nil
 }
 
 func (h *ClientHub) WithChainID(chainId int) (*client.Client, error) {
-	c, found := h.clients[chainId]
+	client, found := h.clients[chainId]
 	if !found {
 		return nil, errors.New("invalid chainId")
 	}
-	return c, nil
+	return client, nil
 }
 
 func (h *ClientHub) MustWithChainID(chainId int) *client.Client {
-	c, _ := h.WithChainID(chainId)
-	return c
+	client, _ := h.WithChainID(chainId)
+	return client
 }
