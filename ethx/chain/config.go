@@ -1,9 +1,9 @@
 package chain
 
 type Config struct {
-	ChainId   int
-	ChainName string
-	URL       string
+	ChainId   int `json:"chainId"`
+	ChainName string `json:"chainName"`
+	URL       string `json:"url"`
 }
 
 func (c *Config) GetChainId() int {
