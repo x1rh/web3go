@@ -16,12 +16,12 @@ import (
 // toAddr could be empty
 // ethValue could be nil or zero, unit is wei
 func (c *Client) EstimateGas(ctx context.Context, fromAddr, toAddr any, data []byte, ethValue *big.Int) (uint64, error) {
-	_from, err := wallet.MustAddress(fromAddr)
+	_from, err := wallet.ToAddress(fromAddr)
 	if err != nil {
 		return 0, errors.Wrap(err, "invalid from address")
 	}
 
-	_to, err := wallet.MustAddress(toAddr)
+	_to, err := wallet.ToAddress(toAddr)
 	if err != nil {
 		return 0, errors.Wrap(err, "invalid to address")
 	}

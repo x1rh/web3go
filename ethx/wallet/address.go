@@ -9,6 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/pkg/errors"
+	"github.com/x1rh/web3go/ethx/castx"
 )
 
 // ParsePrivateKey return privateKey, publicKey, address, error
@@ -62,27 +63,17 @@ func SimpleCheck(address string) bool {
 	return addressRe.MatchString(address)
 }
 
-func MustAddress(iaddress any) (*common.Address, error) {
-	var addr common.Address
-	switch v := iaddress.(type) {
-	case string:
-		addr = common.HexToAddress(v) 
-	case common.Address:
-		addr = v
-	case *common.Address:
-		return v, nil 
-	default:
-		return nil, errors.New("invalid address")
-	}
-	return &addr, nil 
+func ToAddress(iaddress any) (*common.Address, error) {
+	return castx.ToAddress(iaddress)
+}
+
+func MustToAddress(iaddress any) *common.Address{
+	return castx.MustToAddress(iaddress)
 }
 
 
 func IsZeroAddress(iaddress interface{}) bool {
-	addr, err := MustAddress(iaddress)
-	if err != nil {
-		return false 
-	}
+	addr := MustToAddress(iaddress)
 	zeroAddressBytes := common.FromHex("0x0000000000000000000000000000000000000000")
 	addressBytes := addr.Bytes()
 	return reflect.DeepEqual(addressBytes, zeroAddressBytes)

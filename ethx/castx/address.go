@@ -6,16 +6,18 @@ import (
 )
 
 func ToAddress(iaddress any) (*common.Address, error) {
-	var address common.Address
-    switch v := iaddress.(type) {
-    case string:
-        address = common.HexToAddress(v)
-		return &address, nil 
-    case common.Address:
-		return &v, nil 
-    default:
-        return nil, errors.New("invalid address type")
-    }
+	var addr common.Address
+	switch v := iaddress.(type) {
+	case string:
+		addr = common.HexToAddress(v) 
+	case common.Address:
+		addr = v
+	case *common.Address:
+		return v, nil 
+	default:
+		return nil, errors.New("invalid address")
+	}
+	return &addr, nil 
 }
 
 func MustToAddress(iaddress any) *common.Address {
