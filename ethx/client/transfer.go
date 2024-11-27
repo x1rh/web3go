@@ -5,7 +5,7 @@ import (
 	"crypto/ecdsa"
 	"math/big"
 
-	"github.com/x1rh/web3go/ethx/convertx"
+	"github.com/x1rh/web3go/ethx/castx"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -26,7 +26,7 @@ func (c *Client) Transfer(
 	gasLimit uint64,
 	gasPrice *big.Int,
 ) (*types.Transaction, error) {
-	value, err := convertx.EtherToWei(amount)
+	value, err := castx.EtherToWei(amount)
 	if err != nil {
 		return nil, errors.Wrap(err, "invalid amount")
 	}

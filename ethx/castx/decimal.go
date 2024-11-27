@@ -1,4 +1,4 @@
-package convertx
+package castx
 
 import (
 	"math/big"

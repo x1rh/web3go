@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/x1rh/web3go/ethx/convertx"
+	"github.com/x1rh/web3go/ethx/castx"
 
 	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
@@ -28,5 +28,5 @@ func (c *Client) EtherBalance(ctx context.Context, walletAddress string) (*decim
 	if err != nil {
 		return nil, errors.Wrap(err, "get balance error")
 	}
-	return convertx.DivByDecimal(balanceInWei, 18)
+	return castx.DivByDecimal(balanceInWei, 18)
 }
