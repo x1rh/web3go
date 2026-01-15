@@ -7,13 +7,13 @@ import (
 )
 
 const (
-	GWeiI64 int64 = 1000000000
-	EthI64  int64 = 1000000000000000000
+	GWeiI64  int64 = 1000000000
+	EtherI64 int64 = 1000000000000000000
 )
 
 var (
-	GWeiDecimal = decimal.NewFromInt(GWeiI64)
-	EthDecimal  = decimal.NewFromInt(EthI64)
+	GWeiDecimal  = decimal.NewFromInt(GWeiI64)
+	EtherDecimal = decimal.NewFromInt(EtherI64)
 )
 
 var (

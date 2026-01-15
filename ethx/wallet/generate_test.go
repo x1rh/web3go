@@ -13,7 +13,7 @@ func TestBatchGenerateWallet(t *testing.T) {
 
 	for i, wallet := range wallets {
 		t.Logf("Wallet %d:\n", i+1)
-		t.Logf("Address: %s\n", wallet.Address)
+		t.Logf("Address: %s\n", wallet.AddressHex)
 		t.Logf("Private Key: %s\n", wallet.PrivateKey)
 		t.Logf("------------------------------------------------------")
 	}

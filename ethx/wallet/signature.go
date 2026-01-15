@@ -9,12 +9,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-// VerifySignature verify signature's ethAddr
+// VerifySignature verifies signature's Ethereum address.
 func VerifySignature(walletAddress, signature, message string) (bool, error) {
 	// convert hex string to byte slice
 	sig := hexutil.MustDecode(signature)
 
-	////Transform yellow paper V from 27/28 to 0/1
+	// Transform yellow paper V from 27/28 to 0/1.
 	if sig[crypto.RecoveryIDOffset] == 27 || sig[crypto.RecoveryIDOffset] == 28 {
 		sig[crypto.RecoveryIDOffset] -= 27
 	}
@@ -26,9 +26,9 @@ func VerifySignature(walletAddress, signature, message string) (bool, error) {
 	}
 
 
-	lowerEthAddr := strings.ToLower(walletAddress)    // notice
+	lowerEthAddr := strings.ToLower(walletAddress)
 	recoveredAddr := crypto.PubkeyToAddress(*ecdsaPublicKey)
 	lowerRecoveredAddr := strings.ToLower(recoveredAddr.Hex())
 
-	return lowerEthAddr == lowerRecoveredAddr, nil 
+	return lowerEthAddr == lowerRecoveredAddr, nil
 }

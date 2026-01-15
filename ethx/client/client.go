@@ -1,32 +1,45 @@
 package client
 
 import (
-	"github.com/x1rh/web3go/ethx/chain"
+	"context"
+	"fmt"
 
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/pkg/errors"
 )
 
 type Client struct {
 	Client *ethclient.Client
-	Config chain.IConfig
+	Config Config
 }
 
-func NewClient(c chain.IConfig) (*Client, error) {
-	cli, err := ethclient.Dial(c.GetURL())
+func New(c Config, opts ...Option) (*Client, error) {
+	return NewCtx(context.Background(), c, opts...)
+}
+
+func MustNew(c Config, opts ...Option) *Client {
+	client, err := New(c, opts...)
 	if err != nil {
-		return nil, errors.Wrap(err, "fail to dial ethereum node")
+		panic(err)
+	}
+	return client
+}
+
+func NewCtx(ctx context.Context, c Config, opts ...Option) (*Client, error) {
+	o := applyOptions(opts)
+	client, err := dialEthClientCtx(ctx, c.URL, o.origin)
+	if err != nil {
+		return nil, fmt.Errorf("fail to dial blockchain node: %w", err)
 	}
 	return &Client{
-		Client: cli,
+		Client: client,
 		Config: c,
 	}, nil
 }
 
-func MustNewClient(c chain.IConfig) *Client {
-	cli, err := NewClient(c)
+func MustNewCtx(ctx context.Context, c Config, opts ...Option) *Client {
+	client, err := NewCtx(ctx, c, opts...)
 	if err != nil {
 		panic(err)
 	}
-	return cli
+	return client
 }

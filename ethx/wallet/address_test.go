@@ -32,7 +32,7 @@ func TestGetAddressFuzz(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if w.Address != address.Hex() {
+		if w.AddressHex != address.Hex() {
 			t.Fatal("not equal")
 		}
 	}

@@ -8,11 +8,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Wallet struct {
-	PrivateKey string
-	Address    string
-}
-
 func GenerateWallet() (*Wallet, error) {
 	privateKey, err := crypto.GenerateKey()
 	if err != nil {
@@ -31,7 +26,7 @@ func GenerateWallet() (*Wallet, error) {
 	
 	return &Wallet{
 		PrivateKey: pk,
-		Address:    address,
+		AddressHex: address,
 	}, nil
 }
 
